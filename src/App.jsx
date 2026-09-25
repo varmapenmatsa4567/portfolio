@@ -1,0 +1,352 @@
+import { motion, useScroll, useTransform } from 'framer-motion'
+import {
+  Github, Mail, ArrowUpRight, Sparkles, Code2, Database, Cloud,
+  Terminal, Cpu, Braces, MapPin, GraduationCap, Briefcase, BadgeCheck,
+  PenLine, CheckSquare, MonitorDot, ChevronDown,
+} from 'lucide-react'
+import ParticleField from './components/ParticleField.jsx'
+import Typer from './components/Typer.jsx'
+import Reveal from './components/Reveal.jsx'
+import TiltCard from './components/TiltCard.jsx'
+
+const PROJECTS = [
+  {
+    icon: PenLine,
+    tag: 'Flagship',
+    name: 'AI Whiteboard',
+    url: 'https://ai-whiteboard.chiranjeevipenmatsa.com',
+    linkLabel: 'ai-whiteboard.chiranjeevipenmatsa.com',
+    desc: 'An AI teaching whiteboard. Give it a prompt — "draw a car", "explain a triangle" — and it draws step by step while narrating the concept, with replay, multi-page boards and multi-language explanations.',
+    stack: ['React', 'Next.js', 'Canvas 2D', 'Open AI'],
+    featured: true,
+  },
+  {
+    icon: MonitorDot,
+    tag: 'Systems',
+    name: 'VirtualOS',
+    url: "https://virtualos.chiranjeevipenmatsa.com/",
+    linkLabel: "https://virtualos.chiranjeevipenmatsa.com/",
+    desc: 'A simulated operating-system environment in the browser — exploring how processes, memory and a desktop UI can live inside a web app.',
+    stack: ['React', 'JavaScript', 'Next.js', 'Tailwind CSS'],
+  },
+  {
+    
+    icon: CheckSquare,
+    tag: 'Clone',
+    name: 'IRCTC Clone',
+    url: 'https://github.com/varmapenmatsa4567/IRCTC-Clone',
+    linkLabel: 'https://github.com/varmapenmatsa4567/IRCTC-Clone',
+    desc: 'Built a scalable IRCTC clone with microservices, concurrency-safe seat booking, automated waitlist upgrades, and real-time PNR tracking.',
+    stack: ['Java', 'Spring Boot', 'React.js', 'Next.js', 'Kafka', 'Redis', 'PostgreSQL'],
+  },
+]
+
+const SKILLS = [
+  { icon: Braces, name: 'Java & Spring Boot', level: 'Backend core' },
+  { icon: Code2, name: 'ReactJS & NextJS', level: 'Frontend core' },
+  { icon: Database, name: 'SQL & NoSQL', level: 'Data layer' },
+  { icon: Cloud, name: 'AWS', level: 'Developer Associate certified' },
+  { icon: Terminal, name: 'JavaScript / TypeScript', level: 'Daily driver' },
+  { icon: Cpu, name: 'Microservices', level: 'Architecture' },
+]
+
+const MARQUEE = ['Java', 'Spring Boot', 'React', 'AWS', 'TypeScript', 'Microservices', 'REST APIs', 'SQL', 'Vite', 'Next.js', 'Git', 'Canvas 2D']
+
+function Nav() {
+  return (
+    <header className="nav">
+      <a className="nav-logo" href="#top">CVP<span>.</span></a>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#journey">Journey</a>
+        <a href="#contact" className="nav-cta">Say hello</a>
+      </nav>
+    </header>
+  )
+}
+
+function Hero() {
+  const { scrollY } = useScroll()
+  const yBg = useTransform(scrollY, [0, 600], [0, 120])
+  const opacity = useTransform(scrollY, [0, 500], [1, 0])
+
+  return (
+    <section className="hero" id="top">
+      <motion.div className="hero-bg" style={{ y: yBg }}>
+        <ParticleField />
+        <div className="orb orb-a" />
+        <div className="orb orb-b" />
+      </motion.div>
+      <motion.div className="hero-inner" style={{ opacity }}>
+        <motion.p
+          className="hero-kicker"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Sparkles size={15} /> Hi, I&apos;m
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
+          Chiranjeevi Varma
+          <span className="hero-name-sub">Penmatsa</span>
+        </motion.h1>
+        <motion.div
+          className="hero-typer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+        >
+          <Typer
+            phrases={[
+              'Full-stack developer.',
+              'Java + ReactJS, end to end.',
+              'I build things that teach.',
+              'AWS-certified cloud builder.',
+            ]}
+          />
+        </motion.div>
+        <motion.p
+          className="hero-blurb"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+        >
+          ~3.4 years crafting enterprise apps by day and shipping side projects by night —
+          currently obsessed with an AI that draws to teach.
+        </motion.p>
+        <motion.div
+          className="hero-ctas"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.75 }}
+        >
+          <a className="btn btn-primary" href="#work">
+            See my work <ArrowUpRight size={16} />
+          </a>
+          <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
+            <Github size={16} /> GitHub
+          </a>
+        </motion.div>
+        <motion.div
+          className="hero-meta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.9 }}
+        >
+          <span><MapPin size={13} /> Hyderabad, India</span>
+          <span className="dot" />
+          <span><BadgeCheck size={13} /> AWS Developer Associate</span>
+        </motion.div>
+      </motion.div>
+      <motion.a
+        href="#about"
+        className="scroll-hint"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 1.8 }}
+        aria-label="Scroll down"
+      >
+        <ChevronDown size={20} />
+      </motion.a>
+    </section>
+  )
+}
+
+function Marquee() {
+  const items = [...MARQUEE, ...MARQUEE]
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div className="marquee-track">
+        {items.map((t, i) => (
+          <span key={i} className="marquee-item">{t}<i>✦</i></span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function About() {
+  return (
+    <section className="section" id="about">
+      <Reveal>
+        <p className="section-kicker">01 — About</p>
+        <h2>Engineer by trade, <span className="grad-text">builder by instinct.</span></h2>
+      </Reveal>
+      <div className="about-grid">
+        <Reveal delay={0.1}>
+          <p className="about-lead">
+            I&apos;m a full-stack developer who likes owning the whole pipeline — from a
+            Spring Boot service to the React screen in front of it. At TCS I build and
+            maintain enterprise applications; at home I build the weird, fun ideas I can&apos;t
+            stop thinking about.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2} className="about-facts">
+          <div className="fact"><strong>3.4+</strong><span>years shipping code</span></div>
+          <div className="fact"><strong>AWS</strong><span>Developer Associate</span></div>
+          <div className="fact"><strong>B.Tech</strong><span>CSE, SRKR Bhimavaram</span></div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Work() {
+  return (
+    <section className="section" id="work">
+      <Reveal>
+        <p className="section-kicker">02 — Selected work</p>
+        <h2>Things I&apos;ve <span className="grad-text">built.</span></h2>
+      </Reveal>
+      <div className="projects">
+        {PROJECTS.map((p, i) => {
+          const Icon = p.icon
+          const inner = (
+            <>
+              <div className="proj-head">
+                <span className="proj-icon"><Icon size={22} /></span>
+                <span className="proj-tag">{p.tag}</span>
+              </div>
+              <h3>{p.name}</h3>
+              <p className="proj-desc">{p.desc}</p>
+              <div className="proj-stack">
+                {p.stack.map((s) => <span key={s}>{s}</span>)}
+              </div>
+              {p.url && (
+                <span className="proj-link">
+                  {p.linkLabel} <ArrowUpRight size={14} />
+                </span>
+              )}
+            </>
+          )
+          return (
+            <Reveal key={p.name} delay={i * 0.12} className={p.featured ? 'proj-span' : ''}>
+              <TiltCard className={`proj-card ${p.featured ? 'featured' : ''}`}>
+                {p.url ? (
+                  <a href={p.url} target="_blank" rel="noreferrer" className="proj-anchor">{inner}</a>
+                ) : inner}
+              </TiltCard>
+            </Reveal>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+function Skills() {
+  return (
+    <section className="section" id="skills">
+      <Reveal>
+        <p className="section-kicker">03 — Toolbox</p>
+        <h2>What I <span className="grad-text">work with.</span></h2>
+      </Reveal>
+      <div className="skills-grid">
+        {SKILLS.map((s, i) => {
+          const Icon = s.icon
+          return (
+            <Reveal key={s.name} delay={i * 0.08}>
+              <div className="skill">
+                <Icon size={20} className="skill-icon" />
+                <div>
+                  <strong>{s.name}</strong>
+                  <span>{s.level}</span>
+                </div>
+              </div>
+            </Reveal>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+function Journey() {
+  return (
+    <section className="section" id="journey">
+      <Reveal>
+        <p className="section-kicker">04 — Journey</p>
+        <h2>The road <span className="grad-text">so far.</span></h2>
+      </Reveal>
+      <div className="timeline">
+        <Reveal>
+          <div className="tl-item">
+            <div className="tl-dot"><Briefcase size={15} /></div>
+            <div>
+              <span className="tl-when">Jul 2023 — Present</span>
+              <h3>System Engineer · TCS</h3>
+              <p>Building and maintaining full-stack enterprise applications with Java, Spring Boot and ReactJS for production systems used at scale. Hyderabad.</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <div className="tl-item">
+            <div className="tl-dot"><BadgeCheck size={15} /></div>
+            <div>
+              <span className="tl-when">Certification</span>
+              <h3>AWS Certified Developer — Associate</h3>
+              <p>Designing, deploying and debugging cloud-native applications on AWS.</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <div className="tl-item">
+            <div className="tl-dot"><GraduationCap size={15} /></div>
+            <div>
+              <span className="tl-when">2019 — 2023</span>
+              <h3>B.Tech, Computer Science · SRKR Engineering College</h3>
+              <p>Bhimavaram. Where the side-project habit started.</p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function Contact() {
+  return (
+    <section className="section contact" id="contact">
+      <Reveal>
+        <p className="section-kicker">05 — Contact</p>
+        <h2>Let&apos;s build something <span className="grad-text">interesting.</span></h2>
+        <p className="contact-lead">
+          My inbox is open for interesting problems, collaborations, or just a good tech conversation.
+        </p>
+        <div className="contact-ctas">
+          <a className="btn btn-primary" href="mailto:varmapenmatsa4567@gmail.com">
+            <Mail size={16} /> varmapenmatsa4567@gmail.com
+          </a>
+          <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
+            <Github size={16} /> varmapenmatsa4567
+          </a>
+        </div>
+      </Reveal>
+    </section>
+  )
+}
+
+export default function App() {
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Marquee />
+        <About />
+        <Work />
+        <Skills />
+        <Journey />
+        <Contact />
+      </main>
+      <footer className="footer">
+        <span>Designed & built by Chiranjeevi Varma Penmatsa</span>
+        <span className="mono">© {new Date().getFullYear()} · chiranjeevipenmatsa.com</span>
+      </footer>
+    </>
+  )
+}
