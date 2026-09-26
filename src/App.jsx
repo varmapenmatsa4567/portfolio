@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   Github, Mail, ArrowUpRight, Sparkles, Code2, Database, Cloud,
@@ -8,6 +9,11 @@ import ParticleField from './components/ParticleField.jsx'
 import Typer from './components/Typer.jsx'
 import Reveal from './components/Reveal.jsx'
 import TiltCard from './components/TiltCard.jsx'
+import SpotlightCard from './components/SpotlightCard.jsx'
+import MiniTerminal from './components/MiniTerminal.jsx'
+import Counter from './components/Counter.jsx'
+import JourneyTimeline from './components/JourneyTimeline.jsx'
+import FloatingTechLayer from './components/FloatingTechLayer.jsx'
 
 const PROJECTS = [
   {
@@ -52,7 +58,7 @@ const SKILLS = [
 
 const MARQUEE = ['Java', 'Spring Boot', 'React', 'AWS', 'TypeScript', 'Microservices', 'REST APIs', 'SQL', 'Vite', 'Next.js', 'Git', 'Canvas 2D']
 
-function Nav() {
+function Nav({ onOpenTerminal }) {
   return (
     <header className="nav">
       <a className="nav-logo" href="#top">CVP<span>.</span></a>
@@ -60,13 +66,21 @@ function Nav() {
         <a href="#work">Work</a>
         <a href="#skills">Skills</a>
         <a href="#journey">Journey</a>
+        <button
+          type="button"
+          className="nav-term-link mono"
+          onClick={onOpenTerminal}
+          title="Open Interactive CLI (press `)"
+        >
+          <Terminal size={14} /> CLI
+        </button>
         <a href="#contact" className="nav-cta">Say hello</a>
       </nav>
     </header>
   )
 }
 
-function Hero() {
+function Hero({ onOpenTerminal }) {
   const { scrollY } = useScroll()
   const yBg = useTransform(scrollY, [0, 600], [0, 120])
   const opacity = useTransform(scrollY, [0, 500], [1, 0])
@@ -78,6 +92,7 @@ function Hero() {
         <div className="orb orb-a" />
         <div className="orb orb-b" />
       </motion.div>
+      <FloatingTechLayer />
       <motion.div className="hero-inner" style={{ opacity }}>
         <motion.p
           className="hero-kicker"
@@ -128,6 +143,14 @@ function Hero() {
           <a className="btn btn-primary" href="#work">
             See my work <ArrowUpRight size={16} />
           </a>
+          <button
+            type="button"
+            className="btn btn-terminal"
+            onClick={onOpenTerminal}
+            title="Launch interactive shell"
+          >
+            <Terminal size={16} className="term-icon" /> CLI Shell <span className="term-kbd-hint mono">`</span>
+          </button>
           <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
             <Github size={16} /> GitHub
           </a>
@@ -186,9 +209,18 @@ function About() {
           </p>
         </Reveal>
         <Reveal delay={0.2} className="about-facts">
-          <div className="fact"><strong>3.4+</strong><span>years shipping code</span></div>
-          <div className="fact"><strong>AWS</strong><span>Developer Associate</span></div>
-          <div className="fact"><strong>B.Tech</strong><span>CSE, SRKR Bhimavaram</span></div>
+          <SpotlightCard className="fact" tilt={false} spotlightRadius={240}>
+            <strong>
+              <Counter from={0} to={3.4} decimals={1} suffix="+" />
+            </strong>
+            <span>years shipping code</span>
+          </SpotlightCard>
+          <SpotlightCard className="fact" tilt={false} spotlightRadius={240}>
+            <strong>AWS</strong><span>Developer Associate</span>
+          </SpotlightCard>
+          <SpotlightCard className="fact" tilt={false} spotlightRadius={240}>
+            <strong>B.Tech</strong><span>CSE, SRKR Bhimavaram</span>
+          </SpotlightCard>
         </Reveal>
       </div>
     </section>
@@ -250,13 +282,13 @@ function Skills() {
           const Icon = s.icon
           return (
             <Reveal key={s.name} delay={i * 0.08}>
-              <div className="skill">
+              <SpotlightCard className="skill" tilt={false} spotlightRadius={260}>
                 <Icon size={20} className="skill-icon" />
                 <div>
                   <strong>{s.name}</strong>
                   <span>{s.level}</span>
                 </div>
-              </div>
+              </SpotlightCard>
             </Reveal>
           )
         })}
@@ -272,38 +304,7 @@ function Journey() {
         <p className="section-kicker">04 — Journey</p>
         <h2>The road <span className="grad-text">so far.</span></h2>
       </Reveal>
-      <div className="timeline">
-        <Reveal>
-          <div className="tl-item">
-            <div className="tl-dot"><Briefcase size={15} /></div>
-            <div>
-              <span className="tl-when">Jul 2023 — Present</span>
-              <h3>System Engineer · TCS</h3>
-              <p>Building and maintaining full-stack enterprise applications with Java, Spring Boot and ReactJS for production systems used at scale. Hyderabad.</p>
-            </div>
-          </div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <div className="tl-item">
-            <div className="tl-dot"><BadgeCheck size={15} /></div>
-            <div>
-              <span className="tl-when">Certification</span>
-              <h3>AWS Certified Developer — Associate</h3>
-              <p>Designing, deploying and debugging cloud-native applications on AWS.</p>
-            </div>
-          </div>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <div className="tl-item">
-            <div className="tl-dot"><GraduationCap size={15} /></div>
-            <div>
-              <span className="tl-when">2019 — 2023</span>
-              <h3>B.Tech, Computer Science · SRKR Engineering College</h3>
-              <p>Bhimavaram. Where the side-project habit started.</p>
-            </div>
-          </div>
-        </Reveal>
-      </div>
+      <JourneyTimeline />
     </section>
   )
 }
@@ -331,11 +332,14 @@ function Contact() {
 }
 
 export default function App() {
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+
   return (
     <>
-      <Nav />
+      <FloatingTechLayer />
+      <Nav onOpenTerminal={() => setIsTerminalOpen(true)} />
       <main>
-        <Hero />
+        <Hero onOpenTerminal={() => setIsTerminalOpen(true)} />
         <Marquee />
         <About />
         <Work />
@@ -347,6 +351,8 @@ export default function App() {
         <span>Designed & built by Chiranjeevi Varma Penmatsa</span>
         <span className="mono">© {new Date().getFullYear()} · chiranjeevipenmatsa.com</span>
       </footer>
+      <MiniTerminal isOpen={isTerminalOpen} setIsOpen={setIsTerminalOpen} />
     </>
   )
 }
+
