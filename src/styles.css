@@ -1051,20 +1051,30 @@ button { font-family: inherit; }
 
 .skills-interactive-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
 }
 .skill-card-wrapper {
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .interactive-skill-card {
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 20px;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 12px;
+  overflow: hidden;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .interactive-skill-card.hovered {
@@ -1082,6 +1092,9 @@ button { font-family: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 6px;
 }
 .skill-icon-wrap {
   width: 42px;
@@ -1091,6 +1104,7 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 .skill-badge-hl {
   font-size: 0.68rem;
@@ -1099,6 +1113,7 @@ button { font-family: inherit; }
   border: 1px solid rgba(0, 255, 136, 0.3);
   padding: 2px 8px;
   border-radius: 999px;
+  flex-shrink: 0;
 }
 .skill-badge-synergy {
   font-size: 0.68rem;
@@ -1108,27 +1123,36 @@ button { font-family: inherit; }
   padding: 2px 8px;
   border-radius: 999px;
   animation: pulse-dot 1.5s infinite;
+  flex-shrink: 0;
 }
 
 .skill-info {
   margin: 4px 0 2px;
+  width: 100%;
+  min-width: 0;
 }
 .skill-title {
   display: block;
   font-size: 1.05rem;
   margin-bottom: 2px;
   font-family: 'Space Grotesk', sans-serif;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .skill-level {
   display: block;
   font-size: 0.76rem;
   color: var(--accent-2);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .skill-desc {
   color: var(--muted);
   font-size: 0.84rem;
   line-height: 1.55;
   margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 
@@ -2473,13 +2497,23 @@ button { font-family: inherit; }
   }
 
   /* Interactive Skills (Compact Mobile 2-Column Layout) */
+  .skills-interactive-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
   .skills-toolbar {
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   .skills-category-tabs {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -2492,54 +2526,71 @@ button { font-family: inherit; }
   .skill-cat-btn {
     padding: 6px 12px;
     font-size: 0.78rem;
+    flex-shrink: 0;
   }
   .skills-interactive-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .skill-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   .interactive-skill-card {
-    padding: 12px 10px;
+    padding: 10px 8px;
     border-radius: 12px;
-    gap: 6px;
+    gap: 4px;
     min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
   }
   .skill-header {
     margin-bottom: 2px;
+    width: 100%;
+    min-width: 0;
   }
   .skill-icon-wrap {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    flex-shrink: 0;
   }
   .skill-icon-wrap svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
   .skill-badge-hl,
   .skill-badge-synergy {
-    font-size: 0.58rem;
-    padding: 1px 5px;
+    display: none !important; /* Prevents header from expanding and causing card overflow */
   }
   .skill-info {
     margin: 0;
+    width: 100%;
+    min-width: 0;
   }
   .skill-title {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     line-height: 1.25;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-bottom: 1px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .skill-level {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .skill-desc {
-    display: none; /* Hide verbose paragraphs on mobile to reduce section height by ~70% */
+    display: none !important; /* Hide verbose paragraphs on mobile to reduce section height by ~70% */
   }
   .skills-synergy-legend {
     flex-direction: column;
@@ -2547,6 +2598,18 @@ button { font-family: inherit; }
     gap: 8px;
     padding: 12px 14px;
     font-size: 0.8rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .legend-text {
+    width: 100%;
+    min-width: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   /* Journey Timeline */
