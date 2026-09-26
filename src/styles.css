@@ -1361,7 +1361,43 @@ button { font-family: inherit; }
 /* ---------- contact ---------- */
 .contact { text-align: center; }
 .contact-lead { color: var(--muted); margin: -14px 0 30px; }
-.contact-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.contact-primary-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.contact-send-btn {
+  padding: 14px 36px;
+  font-size: 0.98rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.contact-social-icons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+.social-icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.social-icon-btn:hover {
+  background: rgba(124, 131, 253, 0.16);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(124, 131, 253, 0.35);
+}
 
 /* ---------- footer ---------- */
 .footer {
@@ -2664,20 +2700,23 @@ button { font-family: inherit; }
     font-size: 0.92rem;
     margin: -10px 0 24px;
   }
-  .contact-ctas {
-    flex-direction: column;
+  .contact-primary-row {
     width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
-    gap: 10px;
+    margin-bottom: 20px;
   }
-  .contact-ctas .btn {
+  .contact-send-btn {
     width: 100%;
+    max-width: 320px;
     justify-content: center;
-    padding: 12px 14px;
-    font-size: 0.86rem;
-    word-break: break-word;
-    text-align: center;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+  }
+  .contact-social-icons {
+    gap: 14px;
+  }
+  .social-icon-btn {
+    width: 44px;
+    height: 44px;
   }
 
   /* Footer */

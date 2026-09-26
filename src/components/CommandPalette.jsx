@@ -18,6 +18,7 @@ import {
   PartyPopper,
   X,
   CornerDownLeft,
+  Linkedin,
 } from 'lucide-react'
 import { fireGrandConfetti } from '../utils/confetti.js'
 
@@ -174,6 +175,17 @@ export default function CommandPalette({
         title: copiedEmail ? 'Email Copied!' : 'Copy Email Address',
         subtitle: 'varmapenmatsa4567@gmail.com',
         action: copyEmail,
+      },
+      {
+        id: 'act-linkedin',
+        category: 'Actions',
+        icon: Linkedin,
+        title: 'Open LinkedIn Profile',
+        subtitle: 'linkedin.com/in/chiranjeevi-varma-penmatsa',
+        action: () => {
+          window.open('https://www.linkedin.com/in/chiranjeevi-varma-penmatsa', '_blank')
+          setIsOpen(false)
+        },
       },
       {
         id: 'act-github',

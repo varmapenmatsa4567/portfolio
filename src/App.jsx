@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import {
   Github, Mail, ArrowUpRight, Sparkles, Code2, Database, Cloud,
   Terminal, Cpu, Braces, MapPin, GraduationCap, Briefcase, BadgeCheck,
-  PenLine, CheckSquare, MonitorDot, ChevronDown, Activity, Search,
+  PenLine, CheckSquare, MonitorDot, ChevronDown, Activity, Search, Linkedin,
 } from 'lucide-react'
 import ParticleField from './components/ParticleField.jsx'
 import Typer from './components/Typer.jsx'
@@ -211,8 +211,7 @@ function About() {
         </Reveal>
         <Reveal delay={0.2} className="about-facts">
           <SpotlightCard className="fact" tilt={false} spotlightRadius={240}>
-            <strong>
-              <Counter from={0} to={3.4} decimals={1} suffix="+" />
+            <strong>3.4
             </strong>
             <span>years shipping code</span>
           </SpotlightCard>
@@ -337,19 +336,47 @@ function Contact({ onOpenContact }) {
         <p className="contact-lead">
           My inbox is open for interesting problems, collaborations, or just a good tech conversation.
         </p>
-        <div className="contact-ctas">
+
+        {/* Row 1: Only Send Message button */}
+        <div className="contact-primary-row">
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary contact-send-btn"
             onClick={onOpenContact}
           >
-            <Sparkles size={16} /> Send a Message & Fire Confetti 🎉
+            <Sparkles size={16} /> Send Message
           </button>
-          <a className="btn btn-ghost" href="mailto:varmapenmatsa4567@gmail.com">
-            <Mail size={16} /> varmapenmatsa4567@gmail.com
+        </div>
+
+        {/* Row 2: Just icons for LinkedIn, GitHub, Email */}
+        <div className="contact-social-icons">
+          <a
+            href="https://www.linkedin.com/in/chiranjeevi-varma-penmatsa"
+            target="_blank"
+            rel="noreferrer"
+            className="social-icon-btn"
+            title="LinkedIn Profile"
+            aria-label="LinkedIn Profile"
+          >
+            <Linkedin size={20} />
           </a>
-          <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
-            <Github size={16} /> varmapenmatsa4567
+          <a
+            href="https://github.com/varmapenmatsa4567"
+            target="_blank"
+            rel="noreferrer"
+            className="social-icon-btn"
+            title="GitHub Profile"
+            aria-label="GitHub Profile"
+          >
+            <Github size={20} />
+          </a>
+          <a
+            href="mailto:varmapenmatsa4567@gmail.com"
+            className="social-icon-btn"
+            title="Email varmapenmatsa4567@gmail.com"
+            aria-label="Send Email"
+          >
+            <Mail size={20} />
           </a>
         </div>
       </Reveal>

@@ -322,8 +322,20 @@ export default function MiniTerminal({ isOpen, setIsOpen }) {
       case 'contact':
       case 'email':
       case 'socials':
+      case 'linkedin':
         output = (
           <div className="term-block">
+            <p>
+              💼 <strong>LinkedIn:</strong>{' '}
+              <a
+                href="https://www.linkedin.com/in/chiranjeevi-varma-penmatsa"
+                target="_blank"
+                rel="noreferrer"
+                className="term-link"
+              >
+                linkedin.com/in/chiranjeevi-varma-penmatsa <ExternalLink size={12} />
+              </a>
+            </p>
             <p>
               📧 <strong>Email:</strong>{' '}
               <a href="mailto:varmapenmatsa4567@gmail.com" className="term-link">
