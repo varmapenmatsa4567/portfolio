@@ -11,6 +11,7 @@ import {
   ExternalLink,
   RotateCcw,
 } from 'lucide-react'
+import { fireGrandConfetti } from '../utils/confetti.js'
 
 const HELP_COMMANDS = [
   { cmd: 'help', desc: 'Display all available commands' },
@@ -371,6 +372,7 @@ export default function MiniTerminal({ isOpen, setIsOpen }) {
 
       case 'sudo':
         if (args.toLowerCase() === 'hire' || args.toLowerCase() === 'hire me') {
+          fireGrandConfetti()
           output = (
             <div className="term-hire-box">
               <p className="term-hire-title">🎉 [OFFER PROTOCOL INITIATED] 🎉</p>
@@ -404,6 +406,12 @@ export default function MiniTerminal({ isOpen, setIsOpen }) {
         } else {
           output = <p className="term-error">sudo: permission denied. But try running `sudo hire`!</p>
         }
+        break
+
+      case 'confetti':
+      case 'celebrate':
+        fireGrandConfetti()
+        output = <p className="term-success">🎉 Confetti cannon deployed! Grand celebration triggered.</p>
         break
 
       case 'matrix':

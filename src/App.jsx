@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import {
   Github, Mail, ArrowUpRight, Sparkles, Code2, Database, Cloud,
   Terminal, Cpu, Braces, MapPin, GraduationCap, Briefcase, BadgeCheck,
-  PenLine, CheckSquare, MonitorDot, ChevronDown, Activity,
+  PenLine, CheckSquare, MonitorDot, ChevronDown, Activity, Search,
 } from 'lucide-react'
 import ParticleField from './components/ParticleField.jsx'
 import Typer from './components/Typer.jsx'
@@ -15,6 +15,9 @@ import Counter from './components/Counter.jsx'
 import JourneyTimeline from './components/JourneyTimeline.jsx'
 import FloatingTechLayer from './components/FloatingTechLayer.jsx'
 import ArchitectureFlow from './components/ArchitectureFlow.jsx'
+import InteractiveSkills from './components/InteractiveSkills.jsx'
+import CommandPalette from './components/CommandPalette.jsx'
+import ContactModal from './components/ContactModal.jsx'
 
 const PROJECTS = [
   {
@@ -48,18 +51,9 @@ const PROJECTS = [
   },
 ]
 
-const SKILLS = [
-  { icon: Braces, name: 'Java & Spring Boot', level: 'Backend core' },
-  { icon: Code2, name: 'ReactJS & NextJS', level: 'Frontend core' },
-  { icon: Database, name: 'SQL & NoSQL', level: 'Data layer' },
-  { icon: Cloud, name: 'AWS', level: 'Developer Associate certified' },
-  { icon: Terminal, name: 'JavaScript / TypeScript', level: 'Daily driver' },
-  { icon: Cpu, name: 'Microservices', level: 'Architecture' },
-]
-
 const MARQUEE = ['Java', 'Spring Boot', 'React', 'AWS', 'TypeScript', 'Microservices', 'REST APIs', 'SQL', 'Vite', 'Next.js', 'Git', 'Canvas 2D']
 
-function Nav({ onOpenTerminal }) {
+function Nav({ onOpenTerminal, onOpenPalette, onOpenContact }) {
   return (
     <header className="nav">
       <a className="nav-logo" href="#top">CVP<span>.</span></a>
@@ -69,19 +63,33 @@ function Nav({ onOpenTerminal }) {
         <a href="#journey">Journey</a>
         <button
           type="button"
+          className="nav-palette-link mono"
+          onClick={onOpenPalette}
+          title="Open Command Palette (Cmd+K / Ctrl+K)"
+        >
+          <Search size={13} /> <span className="nav-kbd">⌘K</span>
+        </button>
+        <button
+          type="button"
           className="nav-term-link mono"
           onClick={onOpenTerminal}
           title="Open Interactive CLI (press `)"
         >
           <Terminal size={14} /> CLI
         </button>
-        <a href="#contact" className="nav-cta">Say hello</a>
+        <button
+          type="button"
+          className="nav-cta"
+          onClick={onOpenContact}
+        >
+          Say hello
+        </button>
       </nav>
     </header>
   )
 }
 
-function Hero({ onOpenTerminal }) {
+function Hero() {
   const { scrollY } = useScroll()
   const yBg = useTransform(scrollY, [0, 600], [0, 120])
   const opacity = useTransform(scrollY, [0, 500], [1, 0])
@@ -144,14 +152,6 @@ function Hero({ onOpenTerminal }) {
           <a className="btn btn-primary" href="#work">
             See my work <ArrowUpRight size={16} />
           </a>
-          <button
-            type="button"
-            className="btn btn-terminal"
-            onClick={onOpenTerminal}
-            title="Launch interactive shell"
-          >
-            <Terminal size={16} className="term-icon" /> CLI Shell <span className="term-kbd-hint mono">`</span>
-          </button>
           <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
             <Github size={16} /> GitHub
           </a>
@@ -228,9 +228,7 @@ function About() {
   )
 }
 
-function Work() {
-  const [showArchSim, setShowArchSim] = useState(false)
-
+function Work({ showArchSim, setShowArchSim }) {
   return (
     <section className="section" id="work">
       <Reveal>
@@ -313,22 +311,7 @@ function Skills() {
         <p className="section-kicker">03 — Toolbox</p>
         <h2>What I <span className="grad-text">work with.</span></h2>
       </Reveal>
-      <div className="skills-grid">
-        {SKILLS.map((s, i) => {
-          const Icon = s.icon
-          return (
-            <Reveal key={s.name} delay={i * 0.08}>
-              <SpotlightCard className="skill" tilt={false} spotlightRadius={260}>
-                <Icon size={20} className="skill-icon" />
-                <div>
-                  <strong>{s.name}</strong>
-                  <span>{s.level}</span>
-                </div>
-              </SpotlightCard>
-            </Reveal>
-          )
-        })}
-      </div>
+      <InteractiveSkills />
     </section>
   )
 }
@@ -345,7 +328,7 @@ function Journey() {
   )
 }
 
-function Contact() {
+function Contact({ onOpenContact }) {
   return (
     <section className="section contact" id="contact">
       <Reveal>
@@ -355,7 +338,14 @@ function Contact() {
           My inbox is open for interesting problems, collaborations, or just a good tech conversation.
         </p>
         <div className="contact-ctas">
-          <a className="btn btn-primary" href="mailto:varmapenmatsa4567@gmail.com">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={onOpenContact}
+          >
+            <Sparkles size={16} /> Send a Message & Fire Confetti 🎉
+          </button>
+          <a className="btn btn-ghost" href="mailto:varmapenmatsa4567@gmail.com">
             <Mail size={16} /> varmapenmatsa4567@gmail.com
           </a>
           <a className="btn btn-ghost" href="https://github.com/varmapenmatsa4567" target="_blank" rel="noreferrer">
@@ -369,26 +359,45 @@ function Contact() {
 
 export default function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const [isPaletteOpen, setIsPaletteOpen] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
+  const [showArchSim, setShowArchSim] = useState(false)
 
   return (
     <>
       <FloatingTechLayer />
-      <Nav onOpenTerminal={() => setIsTerminalOpen(true)} />
+      <Nav
+        onOpenTerminal={() => setIsTerminalOpen(true)}
+        onOpenPalette={() => setIsPaletteOpen(true)}
+        onOpenContact={() => setIsContactOpen(true)}
+      />
       <main>
-        <Hero onOpenTerminal={() => setIsTerminalOpen(true)} />
+        <Hero />
         <Marquee />
         <About />
-        <Work />
+        <Work
+          showArchSim={showArchSim}
+          setShowArchSim={setShowArchSim}
+        />
         <Skills />
         <Journey />
-        <Contact />
+        <Contact onOpenContact={() => setIsContactOpen(true)} />
       </main>
       <footer className="footer">
         <span>Designed & built by Chiranjeevi Varma Penmatsa</span>
         <span className="mono">© {new Date().getFullYear()} · chiranjeevipenmatsa.com</span>
       </footer>
+
+      {/* Global Interactive Overlays */}
       <MiniTerminal isOpen={isTerminalOpen} setIsOpen={setIsTerminalOpen} />
+      <CommandPalette
+        isOpen={isPaletteOpen}
+        setIsOpen={setIsPaletteOpen}
+        onOpenTerminal={() => setIsTerminalOpen(true)}
+        onOpenContact={() => setIsContactOpen(true)}
+        onToggleSimulator={() => setShowArchSim((prev) => !prev)}
+      />
+      <ContactModal isOpen={isContactOpen} setIsOpen={setIsContactOpen} />
     </>
   )
 }
-
