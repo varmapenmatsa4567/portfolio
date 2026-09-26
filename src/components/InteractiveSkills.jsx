@@ -216,6 +216,7 @@ export default function InteractiveSkills() {
                   }}
                   onMouseEnter={() => setHoveredSkill(skill)}
                   onMouseLeave={() => setHoveredSkill(null)}
+                  onClick={() => setHoveredSkill((prev) => (prev?.id === skill.id ? null : skill))}
                   className="skill-card-wrapper"
                 >
                   <SpotlightCard
