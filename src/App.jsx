@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import {
   Github, Mail, ArrowUpRight, Sparkles, Code2, Database, Cloud,
   Terminal, Cpu, Braces, MapPin, GraduationCap, Briefcase, BadgeCheck,
-  PenLine, CheckSquare, MonitorDot, ChevronDown,
+  PenLine, CheckSquare, MonitorDot, ChevronDown, Activity,
 } from 'lucide-react'
 import ParticleField from './components/ParticleField.jsx'
 import Typer from './components/Typer.jsx'
@@ -14,6 +14,7 @@ import MiniTerminal from './components/MiniTerminal.jsx'
 import Counter from './components/Counter.jsx'
 import JourneyTimeline from './components/JourneyTimeline.jsx'
 import FloatingTechLayer from './components/FloatingTechLayer.jsx'
+import ArchitectureFlow from './components/ArchitectureFlow.jsx'
 
 const PROJECTS = [
   {
@@ -36,14 +37,14 @@ const PROJECTS = [
     stack: ['React', 'JavaScript', 'Next.js', 'Tailwind CSS'],
   },
   {
-    
     icon: CheckSquare,
-    tag: 'Clone',
+    tag: 'Distributed Systems',
     name: 'IRCTC Clone',
     url: 'https://github.com/varmapenmatsa4567/IRCTC-Clone',
-    linkLabel: 'https://github.com/varmapenmatsa4567/IRCTC-Clone',
+    linkLabel: 'github.com/varmapenmatsa4567/IRCTC-Clone',
     desc: 'Built a scalable IRCTC clone with microservices, concurrency-safe seat booking, automated waitlist upgrades, and real-time PNR tracking.',
     stack: ['Java', 'Spring Boot', 'React.js', 'Next.js', 'Kafka', 'Redis', 'PostgreSQL'],
+    hasSimulator: true,
   },
 ]
 
@@ -228,6 +229,8 @@ function About() {
 }
 
 function Work() {
+  const [showArchSim, setShowArchSim] = useState(false)
+
   return (
     <section className="section" id="work">
       <Reveal>
@@ -248,24 +251,57 @@ function Work() {
               <div className="proj-stack">
                 {p.stack.map((s) => <span key={s}>{s}</span>)}
               </div>
-              {p.url && (
-                <span className="proj-link">
-                  {p.linkLabel} <ArrowUpRight size={14} />
-                </span>
-              )}
+              <div className="proj-actions">
+                {p.url && (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="proj-link"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {p.linkLabel} <ArrowUpRight size={14} />
+                  </a>
+                )}
+                {p.hasSimulator && (
+                  <button
+                    type="button"
+                    className={`proj-sim-btn ${showArchSim ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setShowArchSim((prev) => !prev)
+                    }}
+                  >
+                    <Activity size={13} /> {showArchSim ? 'Hide Flow Simulator' : '✨ Live Architecture Flow'}
+                  </button>
+                )}
+              </div>
             </>
           )
           return (
             <Reveal key={p.name} delay={i * 0.12} className={p.featured ? 'proj-span' : ''}>
               <TiltCard className={`proj-card ${p.featured ? 'featured' : ''}`}>
-                {p.url ? (
-                  <a href={p.url} target="_blank" rel="noreferrer" className="proj-anchor">{inner}</a>
-                ) : inner}
+                {inner}
               </TiltCard>
             </Reveal>
           )
         })}
       </div>
+
+      {/* Expandable Architecture Flow Simulator */}
+      <AnimatePresence>
+        {showArchSim && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, y: 20 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: 20 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+          >
+            <ArchitectureFlow />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
