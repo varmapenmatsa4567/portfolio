@@ -122,7 +122,7 @@ export default function MiniTerminal({ isOpen, setIsOpen }) {
             <span className="term-accent">Chiranjeevi Varma OS</span> [Version 3.4.0-enterprise]
           </p>
           <p className="term-welcome-desc">
-            Welcome to the interactive interactive terminal shell. Type <span className="term-cmd-highlight">help</span> to view available commands, or click the quick action chips below.
+            Welcome to the interactive terminal shell. Type <span className="term-cmd-highlight">help</span> to view available commands, or click the quick action chips below.
           </p>
         </div>
       ),
